@@ -1,4 +1,9 @@
 Biketadoo::Application.routes.draw do
+
+  root 'static#welcome'
+  resources :users
+  get 'signup', to: 'users#new', as: 'signup'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

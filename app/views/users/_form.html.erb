@@ -1,0 +1,27 @@
+<ul>
+<%= form_for @user do |f| %>
+
+  <li>
+  <%= f.label :email, "Email" %>
+  <%= f.text_field :email %>
+  </li>
+
+  <li>
+  <%= f.label :name, 'Screen Name' %>
+  <%= f.text_field :name %>
+  </li>
+
+  <li>
+  <%= f.label :password, 'Password' %>
+  <%= f.password_field :password %>
+  </li>
+
+  <li>
+  <%= f.label :password_confirmation, 'Confirm Password' %>
+  <%= f.password_field :password_confirmation %>
+  </li>
+  </ul>
+
+  <%= f.submit (@user.id ? "Save" : "Sign Up!") %>
+
+<% end %>
