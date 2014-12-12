@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in(@user)
       redirect_to @user, alert: "Welcome to BikeTaDoo, #{@user.name}!"
     else
       redirect_to new_user_path, alert: "Error creating account."

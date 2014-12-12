@@ -16,5 +16,5 @@ Then(/^a new account will be created$/) do
 end
 
 Then(/^I will be logged in$/) do
-  pending # look for a 'sign out' link? check to see if @current_user is user? User.name's profile?
+  expect(page.body).to have_css("#user_menu")
 end

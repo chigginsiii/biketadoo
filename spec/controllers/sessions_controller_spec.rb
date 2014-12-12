@@ -14,12 +14,9 @@ RSpec.describe SessionsController, :type => :controller do
   describe "POST create" do
     
     context "with valid login credentials" do
-      before(:each) { post :create, email: user.email, password: user.password }
+      before(:each) { post :create, session: { email: user.email, password: user.password } } 
       it "sets the session user id" do
         expect(session[:user_id]).to eq(user.id) 
-      end
-      it "sets current_user" do
-         expect(assigns(:current_user)).to eq(user)
       end
       it "redirects to the user profile" do
         expect(response).to redirect_to user
@@ -27,7 +24,7 @@ RSpec.describe SessionsController, :type => :controller do
     end
 
     context "with invalid login credentials" do
-      before(:each) { post :create, email: user.email, password: 'nope' }
+      before(:each) { post :create, session: { email: user.email, password: 'nope' } }
       it "does not set the session user id" do
         expect(session[:user_id]).not_to eq(user.id)
       end
@@ -42,12 +39,13 @@ RSpec.describe SessionsController, :type => :controller do
   end
 
   describe "GET destroy" do
-    before(:each) { post :destroy, id: user.id }
+    before(:each) do
+      post :create, session: { email: user.email, password: user.password }
+      expect(session[:user_id]).to eq(user.id)
+      delete :destroy
+    end
     it "unsets user_id in session" do
       expect(session[:user_id]).to be_nil
-    end
-    it "clears current_user" do
-      expect(assigns(:current_user)).to be_nil
     end
     it "redirects to login" do
       expect(response).to redirect_to login_path
